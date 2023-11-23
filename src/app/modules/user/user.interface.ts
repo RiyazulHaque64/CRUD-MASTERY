@@ -1,3 +1,5 @@
+// import { Model } from 'mongoose';
+
 export type TFullName = {
   firstName: string;
   lastName: string;
@@ -25,5 +27,10 @@ export interface TUser {
   isActive: boolean;
   hobbies: Array<string>;
   address: TAddress;
-  orders: Array<TOrder | []>;
+  orders?: Array<TOrder | []>;
 }
+
+// Password hide method
+// export interface UserMethodsModel extends Model<TUser> {
+//   hidePassword(): Promise<TUser>;
+// }

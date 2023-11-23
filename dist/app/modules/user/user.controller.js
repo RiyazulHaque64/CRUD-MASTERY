@@ -37,6 +37,27 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
+const getAllUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield user_service_1.userServices.retrieveAllUserFromDB();
+        res.status(200).json({
+            success: true,
+            message: 'Users fetched successfully!',
+            data: result,
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Users fetch was failed!',
+            error: {
+                code: 500,
+                description: 'Users fetch was failed!',
+            },
+        });
+    }
+});
 exports.userControllers = {
     createUser,
+    getAllUser,
 };

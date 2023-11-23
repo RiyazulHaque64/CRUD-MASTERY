@@ -15,6 +15,11 @@ const createUserIntoDB = (user) => __awaiter(void 0, void 0, void 0, function* (
     const result = yield user_model_1.User.create(user);
     return result;
 });
+const retrieveAllUserFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.User.find({}, { username: 1, fullName: 1, age: 1, email: 1, address: 1 });
+    return result;
+});
 exports.userServices = {
     createUserIntoDB,
+    retrieveAllUserFromDB,
 };
