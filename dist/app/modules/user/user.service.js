@@ -26,7 +26,9 @@ const retrieveAnUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, funct
 });
 const updateAnUserIntoDB = (userId, data) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield user_model_1.User.findOneAndUpdate({ userId }, { $set: data }, { new: true, runValidators: true });
-    return result;
+    const resultWithoutOrders = result === null || result === void 0 ? void 0 : result.toObject();
+    resultWithoutOrders === null || resultWithoutOrders === void 0 ? true : delete resultWithoutOrders.orders;
+    return resultWithoutOrders;
 });
 const deleteUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number(userId);

@@ -26,7 +26,9 @@ const updateAnUserIntoDB = async (userId: string, data: TUser) => {
     { $set: data },
     { new: true, runValidators: true },
   );
-  return result;
+  const resultWithoutOrders = result?.toObject();
+  delete resultWithoutOrders?.orders;
+  return resultWithoutOrders;
 };
 
 const deleteUserFromDB = async (userId: string) => {

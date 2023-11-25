@@ -12,13 +12,13 @@ const createUser = async (req: Request, res: Response) => {
       message: 'User created successfully!',
       data: result,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(403).json({
       success: false,
       message: 'User creation is failed',
       error: {
         code: 403,
-        description: 'User creation is failed!',
+        description: error.message || 'User creation is failed!',
       },
     });
   }
@@ -64,13 +64,13 @@ const getAnUser = async (req: Request, res: Response) => {
         },
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({
       success: false,
       message: 'User fetch was failed!',
       error: {
         code: 500,
-        description: 'User fetch was failed!',
+        description: error.messge || 'User fetch was failed!',
       },
     });
   }
@@ -97,13 +97,13 @@ const updateAnUser = async (req: Request, res: Response) => {
         },
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({
       success: false,
       message: 'User update was failed!',
       error: {
         code: 500,
-        description: 'User update was failed!',
+        description: error.message || 'User update was failed!',
       },
     });
   }
@@ -117,7 +117,7 @@ const deleteUser = async (req: Request, res: Response) => {
       res.status(200).json({
         success: true,
         message: 'User deleted successfully!',
-        data: result,
+        data: null,
       });
     } else {
       res.status(404).json({

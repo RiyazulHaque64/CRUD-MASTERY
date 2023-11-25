@@ -32,7 +32,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             message: 'User creation is failed',
             error: {
                 code: 403,
-                description: 'User creation is failed!',
+                description: error.message || 'User creation is failed!',
             },
         });
     }
@@ -85,7 +85,7 @@ const getAnUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             message: 'User fetch was failed!',
             error: {
                 code: 500,
-                description: 'User fetch was failed!',
+                description: error.messge || 'User fetch was failed!',
             },
         });
     }
@@ -119,7 +119,7 @@ const updateAnUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             message: 'User update was failed!',
             error: {
                 code: 500,
-                description: 'User update was failed!',
+                description: error.message || 'User update was failed!',
             },
         });
     }
@@ -132,7 +132,7 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             res.status(200).json({
                 success: true,
                 message: 'User deleted successfully!',
-                data: result,
+                data: null,
             });
         }
         else {

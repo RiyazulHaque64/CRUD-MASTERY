@@ -39,7 +39,6 @@ const orderSchema = new Schema<TOrder>({
   productName: {
     type: String,
     required: [true, 'Product name is required'],
-    unique: true,
   },
   price: {
     type: Number,
