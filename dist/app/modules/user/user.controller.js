@@ -152,7 +152,7 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             message: 'User delete was failed!',
             error: {
                 code: 500,
-                description: 'User delete was failed!',
+                description: error.message || 'User delete was failed!',
             },
         });
     }
@@ -186,7 +186,7 @@ const addOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             message: 'Order creation was failed!',
             error: {
                 code: 500,
-                description: 'Order creation was failed!',
+                description: error.message || 'Order creation was failed!',
             },
         });
     }
@@ -219,7 +219,7 @@ const getOrdersForSpecificUser = (req, res) => __awaiter(void 0, void 0, void 0,
             message: 'Order fetched was failed!',
             error: {
                 code: 500,
-                description: 'Order fetched was failed!',
+                description: error.message || 'Order fetched was failed!',
             },
         });
     }
@@ -229,11 +229,23 @@ const calculateTotalPrice = (req, res) => __awaiter(void 0, void 0, void 0, func
         const userId = req.params.userId;
         const result = yield user_service_1.userServices.calculateOrdersTotalPrice(userId);
         if (result) {
-            res.status(200).json({
-                success: true,
-                message: 'Total price calculated successfully!',
-                data: result,
-            });
+            if (result.length > 0) {
+                res.status(200).json({
+                    success: true,
+                    message: 'Total price calculated successfully!',
+                    data: result[0],
+                });
+            }
+            else {
+                res.status(404).json({
+                    success: false,
+                    message: 'Order not found!',
+                    error: {
+                        code: 404,
+                        description: 'Order not found!',
+                    },
+                });
+            }
         }
         else {
             res.status(404).json({
@@ -252,7 +264,7 @@ const calculateTotalPrice = (req, res) => __awaiter(void 0, void 0, void 0, func
             message: 'Total price calculation was failed!',
             error: {
                 code: 500,
-                description: 'Total price calculation was failed!',
+                description: error.message || 'Total price calculation was failed!',
             },
         });
     }

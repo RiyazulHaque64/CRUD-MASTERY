@@ -83,7 +83,7 @@ const calculateOrdersTotalPrice = async (userId: string) => {
         $project: { _id: 0 },
       },
     ]);
-    return result[0];
+    return result;
   }
   return null;
 };

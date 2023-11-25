@@ -1,5 +1,7 @@
 # CRUD-MASTERY
 
+## Live: https://crud-mastery-tau.vercel.app
+
 ### How to run the application locally?
 
 - #### step-1: Open a terminal then open the project folder.

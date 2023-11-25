@@ -129,13 +129,13 @@ const deleteUser = async (req: Request, res: Response) => {
         },
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({
       success: false,
       message: 'User delete was failed!',
       error: {
         code: 500,
-        description: 'User delete was failed!',
+        description: error.message || 'User delete was failed!',
       },
     });
   }
@@ -162,13 +162,13 @@ const addOrder = async (req: Request, res: Response) => {
         },
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({
       success: false,
       message: 'Order creation was failed!',
       error: {
         code: 500,
-        description: 'Order creation was failed!',
+        description: error.message || 'Order creation was failed!',
       },
     });
   }
@@ -194,13 +194,13 @@ const getOrdersForSpecificUser = async (req: Request, res: Response) => {
         },
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({
       success: false,
       message: 'Order fetched was failed!',
       error: {
         code: 500,
-        description: 'Order fetched was failed!',
+        description: error.message || 'Order fetched was failed!',
       },
     });
   }
@@ -211,11 +211,22 @@ const calculateTotalPrice = async (req: Request, res: Response) => {
     const userId = req.params.userId;
     const result = await userServices.calculateOrdersTotalPrice(userId);
     if (result) {
-      res.status(200).json({
-        success: true,
-        message: 'Total price calculated successfully!',
-        data: result,
-      });
+      if (result.length > 0) {
+        res.status(200).json({
+          success: true,
+          message: 'Total price calculated successfully!',
+          data: result[0],
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Order not found!',
+          error: {
+            code: 404,
+            description: 'Order not found!',
+          },
+        });
+      }
     } else {
       res.status(404).json({
         success: false,
@@ -226,13 +237,13 @@ const calculateTotalPrice = async (req: Request, res: Response) => {
         },
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({
       success: false,
       message: 'Total price calculation was failed!',
       error: {
         code: 500,
-        description: 'Total price calculation was failed!',
+        description: error.message || 'Total price calculation was failed!',
       },
     });
   }

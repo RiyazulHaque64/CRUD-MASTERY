@@ -7,7 +7,10 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Server is working fine...');
+  res.status(200).json({
+    success: true,
+    message: 'Server is working fine',
+  });
 });
 
 app.use('/api/users', userRoutes);

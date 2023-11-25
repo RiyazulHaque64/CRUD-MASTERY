@@ -78,6 +78,7 @@ const userSchema = new mongoose_1.Schema({
     email: {
         type: String,
         required: [true, 'Email is required!'],
+        unique: true,
     },
     isActive: {
         type: Boolean,
@@ -104,10 +105,12 @@ userSchema.methods.toJSON = function () {
     delete user.password;
     return user;
 };
+// Check user existence
 userSchema.statics.isUserExists = function (userId) {
     return __awaiter(this, void 0, void 0, function* () {
         const result = yield exports.User.findOne({ userId }, { orders: 0 });
         return result;
     });
 };
+// Make Use Model from schema
 exports.User = (0, mongoose_1.model)('User', userSchema);

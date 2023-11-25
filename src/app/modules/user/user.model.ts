@@ -74,6 +74,7 @@ const userSchema = new Schema<TUser, UserModel>({
   email: {
     type: String,
     required: [true, 'Email is required!'],
+    unique: true,
   },
   isActive: {
     type: Boolean,
@@ -101,9 +102,11 @@ userSchema.methods.toJSON = function () {
   return user;
 };
 
+// Check user existence
 userSchema.statics.isUserExists = async function (userId: number) {
   const result = await User.findOne({ userId }, { orders: 0 });
   return result;
 };
 
+// Make Use Model from schema
 export const User = model<TUser, UserModel>('User', userSchema);

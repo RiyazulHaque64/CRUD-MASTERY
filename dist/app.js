@@ -10,7 +10,10 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.get('/', (req, res) => {
-    res.send('Server is working fine...');
+    res.status(200).json({
+        success: true,
+        message: 'Server is working fine',
+    });
 });
 app.use('/api/users', user_route_1.userRoutes);
 exports.default = app;

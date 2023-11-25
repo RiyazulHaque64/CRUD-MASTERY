@@ -76,7 +76,7 @@ const calculateOrdersTotalPrice = (userId) => __awaiter(void 0, void 0, void 0, 
                 $project: { _id: 0 },
             },
         ]);
-        return result[0];
+        return result;
     }
     return null;
 });
