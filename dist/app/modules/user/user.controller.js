@@ -157,10 +157,113 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
+const addOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.userId;
+        const order = req.body;
+        const result = yield user_service_1.userServices.addOrderIntoUser(userId, order);
+        if (result) {
+            res.status(201).json({
+                success: true,
+                message: 'Order created successfully!',
+                data: null,
+            });
+        }
+        else {
+            res.status(404).json({
+                success: false,
+                message: 'User not found!',
+                error: {
+                    code: 404,
+                    description: 'User not found!',
+                },
+            });
+        }
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Order creation was failed!',
+            error: {
+                code: 500,
+                description: 'Order creation was failed!',
+            },
+        });
+    }
+});
+const getOrdersForSpecificUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.userId;
+        const result = yield user_service_1.userServices.retrieveAllOrdersForSpecificUser(userId);
+        if (result) {
+            res.status(200).json({
+                success: true,
+                message: 'Order fetched successfully!',
+                data: result,
+            });
+        }
+        else {
+            res.status(404).json({
+                success: false,
+                message: 'User not found!',
+                error: {
+                    code: 404,
+                    description: 'User not found!',
+                },
+            });
+        }
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Order fetched was failed!',
+            error: {
+                code: 500,
+                description: 'Order fetched was failed!',
+            },
+        });
+    }
+});
+const calculateTotalPrice = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.userId;
+        const result = yield user_service_1.userServices.calculateOrdersTotalPrice(userId);
+        if (result) {
+            res.status(200).json({
+                success: true,
+                message: 'Total price calculated successfully!',
+                data: result,
+            });
+        }
+        else {
+            res.status(404).json({
+                success: false,
+                message: 'User not found!',
+                error: {
+                    code: 404,
+                    description: 'User not found!',
+                },
+            });
+        }
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Total price calculation was failed!',
+            error: {
+                code: 500,
+                description: 'Total price calculation was failed!',
+            },
+        });
+    }
+});
 exports.userControllers = {
     createUser,
     getAllUser,
     getAnUser,
     updateAnUser,
     deleteUser,
+    addOrder,
+    getOrdersForSpecificUser,
+    calculateTotalPrice,
 };

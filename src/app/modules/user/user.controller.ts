@@ -141,10 +141,110 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
+const addOrder = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const order = req.body;
+    const result = await userServices.addOrderIntoUser(userId, order);
+    if (result) {
+      res.status(201).json({
+        success: true,
+        message: 'Order created successfully!',
+        data: null,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'User not found!',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Order creation was failed!',
+      error: {
+        code: 500,
+        description: 'Order creation was failed!',
+      },
+    });
+  }
+};
+
+const getOrdersForSpecificUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const result = await userServices.retrieveAllOrdersForSpecificUser(userId);
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'Order fetched successfully!',
+        data: result,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'User not found!',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Order fetched was failed!',
+      error: {
+        code: 500,
+        description: 'Order fetched was failed!',
+      },
+    });
+  }
+};
+
+const calculateTotalPrice = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const result = await userServices.calculateOrdersTotalPrice(userId);
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'Total price calculated successfully!',
+        data: result,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'User not found!',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Total price calculation was failed!',
+      error: {
+        code: 500,
+        description: 'Total price calculation was failed!',
+      },
+    });
+  }
+};
+
 export const userControllers = {
   createUser,
   getAllUser,
   getAnUser,
   updateAnUser,
   deleteUser,
+  addOrder,
+  getOrdersForSpecificUser,
+  calculateTotalPrice,
 };

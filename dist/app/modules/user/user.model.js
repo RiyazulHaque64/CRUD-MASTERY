@@ -44,6 +44,7 @@ const orderSchema = new mongoose_1.Schema({
     productName: {
         type: String,
         required: [true, 'Product name is required'],
+        unique: true,
     },
     price: {
         type: Number,

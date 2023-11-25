@@ -20,7 +20,8 @@ const retrieveAllUserFromDB = () => __awaiter(void 0, void 0, void 0, function* 
     return result;
 });
 const retrieveAnUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield user_model_1.User.isUserExists(userId);
+    const id = Number(userId);
+    const result = yield user_model_1.User.isUserExists(id);
     return result;
 });
 const updateAnUserIntoDB = (userId, data) => __awaiter(void 0, void 0, void 0, function* () {
@@ -28,9 +29,52 @@ const updateAnUserIntoDB = (userId, data) => __awaiter(void 0, void 0, void 0, f
     return result;
 });
 const deleteUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    if (yield user_model_1.User.isUserExists(userId)) {
-        const result = yield user_model_1.User.deleteOne({ userId });
+    const id = Number(userId);
+    if (yield user_model_1.User.isUserExists(id)) {
+        const result = yield user_model_1.User.deleteOne({ userId: id });
         return result;
+    }
+    return null;
+});
+const addOrderIntoUser = (userId, order) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = Number(userId);
+    if (yield user_model_1.User.isUserExists(id)) {
+        const result = yield user_model_1.User.updateOne({ userId: id }, { $push: { orders: order } });
+        return result;
+    }
+    return null;
+});
+const retrieveAllOrdersForSpecificUser = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = Number(userId);
+    if (yield user_model_1.User.isUserExists(id)) {
+        const result = yield user_model_1.User.findOne({ userId: id }, { _id: 0, orders: 1 });
+        return result;
+    }
+    return null;
+});
+const calculateOrdersTotalPrice = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = Number(userId);
+    if (yield user_model_1.User.isUserExists(id)) {
+        const result = yield user_model_1.User.aggregate([
+            {
+                $match: { userId: id },
+            },
+            {
+                $unwind: '$orders',
+            },
+            {
+                $group: {
+                    _id: '$_id',
+                    totalPrice: {
+                        $sum: { $multiply: ['$orders.price', '$orders.quantity'] },
+                    },
+                },
+            },
+            {
+                $project: { _id: 0 },
+            },
+        ]);
+        return result[0];
     }
     return null;
 });
@@ -40,4 +84,7 @@ exports.userServices = {
     retrieveAnUserFromDB,
     updateAnUserIntoDB,
     deleteUserFromDB,
+    addOrderIntoUser,
+    retrieveAllOrdersForSpecificUser,
+    calculateOrdersTotalPrice,
 };

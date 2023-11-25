@@ -39,6 +39,7 @@ const orderSchema = new Schema<TOrder>({
   productName: {
     type: String,
     required: [true, 'Product name is required'],
+    unique: true,
   },
   price: {
     type: Number,
@@ -102,7 +103,7 @@ userSchema.methods.toJSON = function () {
   return user;
 };
 
-userSchema.statics.isUserExists = async function (userId: string) {
+userSchema.statics.isUserExists = async function (userId: number) {
   const result = await User.findOne({ userId }, { orders: 0 });
   return result;
 };
