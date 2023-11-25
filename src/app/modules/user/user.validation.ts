@@ -13,8 +13,8 @@ const addressValidationSchema = z.object({
 
 const orderValidationSchema = z.object({
   productName: z.string(),
-  price: z.number(),
-  quantity: z.number(),
+  price: z.number().positive(),
+  quantity: z.number().positive(),
 });
 
 const userValidationSchema = z.object({
@@ -22,7 +22,7 @@ const userValidationSchema = z.object({
   username: z.string(),
   password: z.string(),
   fullName: fullNameValidationSchema,
-  age: z.number().min(0),
+  age: z.number().positive(),
   email: z.string().email(),
   isActive: z.boolean().default(false),
   hobbies: z.array(z.string()),

@@ -12,15 +12,15 @@ const addressValidationSchema = zod_1.z.object({
 });
 const orderValidationSchema = zod_1.z.object({
     productName: zod_1.z.string(),
-    price: zod_1.z.number(),
-    quantity: zod_1.z.number(),
+    price: zod_1.z.number().positive(),
+    quantity: zod_1.z.number().positive(),
 });
 const userValidationSchema = zod_1.z.object({
     userId: zod_1.z.number(),
     username: zod_1.z.string(),
     password: zod_1.z.string(),
     fullName: fullNameValidationSchema,
-    age: zod_1.z.number().min(0),
+    age: zod_1.z.number().positive(),
     email: zod_1.z.string().email(),
     isActive: zod_1.z.boolean().default(false),
     hobbies: zod_1.z.array(zod_1.z.string()),

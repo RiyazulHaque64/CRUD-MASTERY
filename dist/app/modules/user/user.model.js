@@ -78,8 +78,7 @@ const userSchema = new mongoose_1.Schema({
     },
     email: {
         type: String,
-        required: [true, 'An unique email is required!'],
-        unique: true,
+        required: [true, 'Email is required!'],
     },
     isActive: {
         type: Boolean,
