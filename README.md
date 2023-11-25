@@ -11,7 +11,7 @@
 tsc -w
 ```
 
-- #### step-3: Open a another termianal and type the following command for run the server,
+- #### step-3: Open an another termianal and type the following command for run the server,
 
 ```bash
 npm run dev
