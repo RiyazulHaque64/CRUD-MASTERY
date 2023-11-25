@@ -1,4 +1,4 @@
-// import { Model } from 'mongoose';
+import { Model } from 'mongoose';
 
 export type TFullName = {
   firstName: string;
@@ -30,7 +30,7 @@ export interface TUser {
   orders?: Array<TOrder | []>;
 }
 
-// Password hide method
-// export interface UserMethodsModel extends Model<TUser> {
-//   hidePassword(): Promise<TUser>;
-// }
+export interface UserModel extends Model<TUser> {
+  // eslint-disable-next-line no-unused-vars
+  isUserExists(id: string): Promise<TUser | null>;
+}

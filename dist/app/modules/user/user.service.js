@@ -19,7 +19,25 @@ const retrieveAllUserFromDB = () => __awaiter(void 0, void 0, void 0, function* 
     const result = yield user_model_1.User.find({}, { username: 1, fullName: 1, age: 1, email: 1, address: 1 });
     return result;
 });
+const retrieveAnUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.User.isUserExists(userId);
+    return result;
+});
+const updateAnUserIntoDB = (userId, data) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.User.findOneAndUpdate({ userId }, { $set: data }, { new: true, runValidators: true });
+    return result;
+});
+const deleteUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    if (yield user_model_1.User.isUserExists(userId)) {
+        const result = yield user_model_1.User.deleteOne({ userId });
+        return result;
+    }
+    return null;
+});
 exports.userServices = {
     createUserIntoDB,
     retrieveAllUserFromDB,
+    retrieveAnUserFromDB,
+    updateAnUserIntoDB,
+    deleteUserFromDB,
 };

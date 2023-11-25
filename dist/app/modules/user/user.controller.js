@@ -57,7 +57,110 @@ const getAllUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
+const getAnUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.userId;
+        const result = yield user_service_1.userServices.retrieveAnUserFromDB(userId);
+        if (result) {
+            res.status(200).json({
+                success: true,
+                message: 'User fetched successfully!',
+                data: result,
+            });
+        }
+        else {
+            res.status(404).json({
+                success: false,
+                message: 'User not found!',
+                error: {
+                    code: 404,
+                    description: 'User not found!',
+                },
+            });
+        }
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'User fetch was failed!',
+            error: {
+                code: 500,
+                description: 'User fetch was failed!',
+            },
+        });
+    }
+});
+const updateAnUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.userId;
+        const data = req.body;
+        const result = yield user_service_1.userServices.updateAnUserIntoDB(userId, data);
+        if (result) {
+            res.status(200).json({
+                success: true,
+                message: 'User updated successfully!',
+                data: result,
+            });
+        }
+        else {
+            res.status(404).json({
+                success: false,
+                message: 'User not found!',
+                error: {
+                    code: 404,
+                    description: 'User not found!',
+                },
+            });
+        }
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'User update was failed!',
+            error: {
+                code: 500,
+                description: 'User update was failed!',
+            },
+        });
+    }
+});
+const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.userId;
+        const result = yield user_service_1.userServices.deleteUserFromDB(userId);
+        if (result) {
+            res.status(200).json({
+                success: true,
+                message: 'User deleted successfully!',
+                data: result,
+            });
+        }
+        else {
+            res.status(404).json({
+                success: false,
+                message: 'User not found!',
+                error: {
+                    code: 404,
+                    description: 'User not found!',
+                },
+            });
+        }
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'User delete was failed!',
+            error: {
+                code: 500,
+                description: 'User delete was failed!',
+            },
+        });
+    }
+});
 exports.userControllers = {
     createUser,
     getAllUser,
+    getAnUser,
+    updateAnUser,
+    deleteUser,
 };

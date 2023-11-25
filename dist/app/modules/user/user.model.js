@@ -105,4 +105,10 @@ userSchema.methods.toJSON = function () {
     delete user.password;
     return user;
 };
+userSchema.statics.isUserExists = function (userId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const result = yield exports.User.findOne({ userId }, { orders: 0 });
+        return result;
+    });
+};
 exports.User = (0, mongoose_1.model)('User', userSchema);

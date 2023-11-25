@@ -1,5 +1,11 @@
 import { Schema, model } from 'mongoose';
-import { TAddress, TFullName, TOrder, TUser } from './user.interface';
+import {
+  TAddress,
+  TFullName,
+  TOrder,
+  TUser,
+  UserModel,
+} from './user.interface';
 import bcrypt from 'bcrypt';
 import config from '../../config';
 
@@ -44,7 +50,7 @@ const orderSchema = new Schema<TOrder>({
   },
 });
 
-const userSchema = new Schema<TUser>({
+const userSchema = new Schema<TUser, UserModel>({
   userId: {
     type: Number,
     required: [true, 'An unique user id is required!'],
@@ -96,4 +102,9 @@ userSchema.methods.toJSON = function () {
   return user;
 };
 
-export const User = model<TUser>('User', userSchema);
+userSchema.statics.isUserExists = async function (userId: string) {
+  const result = await User.findOne({ userId }, { orders: 0 });
+  return result;
+};
+
+export const User = model<TUser, UserModel>('User', userSchema);
